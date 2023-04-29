@@ -1,5 +1,5 @@
-/*
-resource "aws_instance" "app-server" {
+
+/*resource "aws_instance" "app-server" {
   ami               = "ami-02396cdd13e9a1257"
   instance_type     = "t2.micro"
   availability_zone = "us-east-1a"
@@ -55,5 +55,5 @@ egress {
       Name = "my-sg"
    }
 }
-/*
+*/
 

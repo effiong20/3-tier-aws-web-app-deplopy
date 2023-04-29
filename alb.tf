@@ -2,7 +2,8 @@ resource "aws_lb_target_group" "my-alb-target" {
   name             = "my-alb-target"
   port             = 80
   protocol         = "HTTP"
-  target_type      = "instance"
+ // target_type      = "instance"
+  target_type      = "alb"
   vpc_id           = aws_vpc.my-vpc.id
 
  health_check {
@@ -33,18 +34,18 @@ resource "aws_lb_listener" "my-alb-listener" {
   protocol           = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.my-alb-target.arn
+   target_group_arn = aws_lb_target_group.my-alb-target.arn
   }
 }
 
 resource "aws_lb_target_group_attachment" "att-to-target" {
   target_group_arn = aws_lb_target_group.my-alb-target.arn
-  target_id        = aws_instance.app-server[count.index].id
-  count            = length(aws_instance.app-server)
+  target_id        = aws_autoscaling_group.my-autoscale.id
+  #target_id        = aws_instance.app-server[count.index].id
+ # count            = length(aws_instance.app-server)
   port             = 80
   
 }
-
 
 
 

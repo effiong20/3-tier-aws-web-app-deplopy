@@ -5,7 +5,7 @@ resource "aws_launch_template" "my-lauch-template" {
   key_name        = "my-key"
   vpc_security_group_ids = ["${aws_security_group.my-sg.id}"]
   user_data         = file("install_apache.sh")
-
+}
 
   resource "aws_autoscaling_group" "my-autoscale" {
   name                      = "my-autoscale"
@@ -15,15 +15,18 @@ resource "aws_launch_template" "my-lauch-template" {
   health_check_type         = "ELB"
   desired_capacity          = 3
   force_delete              = true
-  launch_template           = aws_launch_template.my-lauch-template.name
   vpc_zone_identifier       = [aws_subnet.my-publicweb-subnet1.id, aws_subnet.my-publicweb-subnet2.id]
-  target_group_arn          = aws_lb_target_group.my-alb-target.arn
-  
+ // target_group_arns         = aws_lb_target_group.my-alb-target.arn
 
-  tag {
-    key                 = "my-scale"
-    value               = "my-scaling"
+ launch_template {
+    id      = aws_launch_template.my-lauch-template.id
+    version = "$Latest"
+  } 
 
+tag {
+    key                 = "name"
+    value               = "my-autoscale"
+    propagate_at_launch = true
   }
-}
+
 }

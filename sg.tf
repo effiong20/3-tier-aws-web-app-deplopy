@@ -17,7 +17,8 @@ resource "aws_security_group" "my-sg" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    security_groups  = [aws_security_group.jump-sg.id]
+   cidr_blocks = ["0.0.0.0/0"]
+   # security_groups  = [aws_security_group.jump-sg.id]
  }
 
 egress {
