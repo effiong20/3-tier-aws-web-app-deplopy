@@ -8,5 +8,5 @@ output "subnet_cidr_block"{
     value = aws_subnet.my-privatapp-subnet2
 }
 output "alb_dns_name"{
-    value = aws_lb.my-alb.dns_name
+   value = aws_elb.my-alb.dns_name
 }
