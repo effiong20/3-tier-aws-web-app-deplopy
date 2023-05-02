@@ -11,9 +11,9 @@ resource "aws_launch_template" "my-lauch-template" {
   name                      = "my-autoscale"
   max_size                  = 2
   min_size                  = 2
-  health_check_grace_period = 300
+  health_check_grace_period = 200
   health_check_type         = "ELB"
-  desired_capacity          = 2
+  desired_capacity          = 3
   force_delete              = true
   vpc_zone_identifier       = [aws_subnet.my-publicweb-subnet1.id, aws_subnet.my-publicweb-subnet2.id]
   load_balancers            = [aws_elb.my-alb.name]
