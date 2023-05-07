@@ -18,7 +18,7 @@ resource "aws_launch_template" "my-lauch-template" {
   desired_capacity          = 2
   force_delete              = true
  // vpc_zone_identifier       = [aws_subnet.my-publicweb-subnet1.id, aws_subnet.my-publicweb-subnet2.id]
-  vpc_zone_identifier       = ["${module.vpc_module.my-publicweb-subnet1}", "${module.vpc_module.my-publicweb-subnet2}"]
+  vpc_zone_identifier       = ["${module.vpc_module.my-publicweb-subnet1-id}", "${module.vpc_module.my-publicweb-subnet2-id}"]
  // load_balancers            = [aws_lb.my-alb.name]
  // target_group_arns         = aws_lb_target_group.my-alb-target.arn
 
