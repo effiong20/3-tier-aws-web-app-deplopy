@@ -4,7 +4,7 @@
   protocol         = "HTTP"
  // target_type      = "instance"
   target_type      = "alb"
-  vpc_id           = aws_vpc.my-vpc.id
+  vpc_id           =  module.vpc_module.vpc-id
 
  health_check {
   interval  = 10
@@ -14,16 +14,17 @@
   healthy_threshold = 3
   unhealthy_threshold = 2
 }
-*/
-resource "aws_elb" "my-alb" {
+
+resource "aws_lb" "my-alb" {
   name               = "my-alb"
  // load_balancer_type = "application"
   security_groups    = ["${aws_security_group.alb-sg.id}"]
-  subnets            = [aws_subnet.my-publicweb-subnet1.id ,aws_subnet.my-publicweb-subnet2.id]
- // enable_deletion_protection = false
-
+ // subnets          = [aws_subnet.my-publicweb-subnet1.id ,aws_subnet.my-publicweb-subnet2.id]
+  subnets            = [module.vpc_module.my-publicweb-subnet1.id ,module.vpc_module.my-publicweb-subnet2.id]
+  enable_deletion_protection = false
+}
  listener{
- // load_balancer_arn = aws_lb.my-alb.arn
+  load_balancer_arn = aws_lb.my-alb.arn
   instance_port = 80
   instance_protocol= "http"
   lb_port=  80
@@ -41,7 +42,7 @@ resource "aws_elb" "my-alb" {
     Environment = "my-alb-sample"
  }
 }
-
+*/
 
 
 

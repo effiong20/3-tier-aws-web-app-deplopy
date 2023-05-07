@@ -1,7 +1,9 @@
-/*resource "aws_vpc" "my-vpc" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
-
+resource "aws_vpc" "my-vpc" {
+  cidr_block       = var.vpc_cidr
+  instance_tenancy = var.instance_tenancy
+ // enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support    = var.enable_dns_support
+  
   tags = {
     Name = "my-vpc"
   }
@@ -17,7 +19,7 @@ resource "aws_internet_gateway" "my-gw" {
 ##CREATE PUBLIC SUBNET GROUP
 resource "aws_subnet" "my-publicweb-subnet1" {
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = var.my-publicweb-subnet1-cidr
   availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
 
@@ -27,10 +29,10 @@ resource "aws_subnet" "my-publicweb-subnet1" {
 }
 
 resource "aws_subnet" "my-publicweb-subnet2" {
-  vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id     =aws_vpc.my-vpc.id
+  cidr_block = var.my-publicweb-subnet2-cidr
   availability_zone = "us-east-1b"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
  tags = {
     Name = "my-publicweb-subnet2"
@@ -40,7 +42,7 @@ resource "aws_subnet" "my-publicweb-subnet2" {
 ###CREATE PRIVATE SUBNET FOR APP SERVER 
 resource "aws_subnet" "my-privatapp-subnet1" {
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.3.0/24"
+  cidr_block = var.my-privatapp-subnet1-cidr
   availability_zone = "us-east-1a"
   
 tags = {
@@ -50,7 +52,7 @@ tags = {
 
 resource "aws_subnet" "my-privatapp-subnet2" {
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.4.0/24"
+  cidr_block = var.my-privatapp-subnet2-cidr
   availability_zone = "us-east-1b"
   
 tags = {
@@ -61,7 +63,7 @@ tags = {
 ##CREATE MY DATABASE PRIVATE SUBNET 
 resource "aws_subnet" "my-privatdb-subnet1" {
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.5.0/24"
+  cidr_block = var.my-privatdb-subnet1-cidr
   availability_zone = "us-east-1a"
   
 tags = {
@@ -71,7 +73,7 @@ tags = {
 
 resource "aws_subnet" "my-privatdb-subnet2" {
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = "10.0.6.0/24"
+  cidr_block = var.my-privatdb-subnet2-cidr
   availability_zone = "us-east-1b"
   
 tags = {
@@ -82,7 +84,6 @@ tags = {
 ##CREATE ROUT TABLE FOR WEB SERVER
 resource "aws_route_table" "web-public-routtable" {
   vpc_id = aws_vpc.my-vpc.id
-
  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.my-gw.id
@@ -146,7 +147,6 @@ resource "aws_route_table_association" "db-rout-associat-subnet2" {
   route_table_id = aws_route_table.db-private-routtable.id
 }
 
-
 resource "aws_eip" "my-eip" {
   vpc      = true
 }
@@ -159,4 +159,3 @@ resource "aws_nat_gateway" "my-natgw" {
     Name = "gw-natgw"
   }
 }
-*/

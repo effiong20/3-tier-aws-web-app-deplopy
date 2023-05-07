@@ -1,7 +1,10 @@
 # AWS RDB
+
+
 resource "aws_db_subnet_group" "my_subnet_group" {
   name       = "my_subnet_group"
-  subnet_ids = [aws_subnet.my-privatdb-subnet1.id, aws_subnet.my-privatdb-subnet2.id]
+ // subnet_ids = [aws_subnet.my-privatdb-subnet1.id, aws_subnet.my-privatdb-subnet2.id]
+  subnet_ids = [module.vpc_module.my-privatdb-subnet1-id, module.vpc_module.my-privatdb-subnet2-id]
 
   tags = {
     Name = "my_subnet_group"
@@ -21,7 +24,7 @@ resource "aws_db_parameter_group" "param-group" {
 resource "aws_security_group" "rds_sg" {
   name        = "rds_sg"
   description = "Allow TLS inbound traffic"
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      =  module.vpc_module.vpc-id
 
   ingress {
     description      = "TLS from VPC"
@@ -58,6 +61,8 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
   db_subnet_group_name = aws_db_subnet_group.my_subnet_group.name 
   storage_type         = "gp2"
-  availability_zone    = aws_subnet.my-privatdb-subnet1.availability_zone
+  //availability_zone    = module.vpc_module.my-privatdb-subnet1.availability_zone
+ // availability_zone    = module.vpc_module.my-privatdb-subnet1.availability_zone
   backup_retention_period = 30
 }
+

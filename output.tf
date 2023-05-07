@@ -1,4 +1,4 @@
-output "vpcid" {
+/*output "vpcid" {
 value = aws_vpc.my-vpc.id
 }
 output "subnet_id"{
@@ -10,3 +10,4 @@ output "subnet_cidr_block"{
 output "alb_dns_name"{
    value = aws_elb.my-alb.dns_name
 }
+*/

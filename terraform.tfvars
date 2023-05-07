@@ -1,0 +1,12 @@
+vpc_name                   = "my_vpcsample"
+vpc_cidr                   = "10.0.0.0/16"
+instance_tenancy           = "default"
+map_public_ip_on_launch    = true
+my-publicweb-subnet1-cidr  = "10.0.1.0/24"
+my-publicweb-subnet2-cidr  = "10.0.2.0/24"
+my-privatapp-subnet1-cidr  = "10.0.3.0/24"
+my-privatapp-subnet2-cidr  = "10.0.4.0/24"
+my-privatdb-subnet1-cidr   = "10.0.5.0/24"
+my-privatdb-subnet2-cidr   = "10.0.6.0/24"
+enable_dns_support         = true
+enable_dns_hostname        = false
