@@ -48,7 +48,7 @@ resource "aws_security_group" "rds_sg" {
 }
 
 
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "my-data" {
   allocated_storage    = 30
   db_name              = "mydb"
   engine               = "mysql"
@@ -61,8 +61,12 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
   db_subnet_group_name = aws_db_subnet_group.my_subnet_group.name 
   storage_type         = "gp2"
-  //availability_zone    = module.vpc_module.my-privatdb-subnet1.availability_zone
- // availability_zone    = module.vpc_module.my-privatdb-subnet1.availability_zone
+  multi_az             = "false"
+ //availability_zone    = ["${module.vpc_module.my-privatdb-subnet1-id}","${module.vpc_module.my-privatdb-subnet2-id}"]
   backup_retention_period = 30
+}
+
+output "db-endpoint" {
+ value =  aws_db_instance.my-data.endpoint
 }
 
