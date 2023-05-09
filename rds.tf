@@ -13,7 +13,7 @@ resource "aws_db_subnet_group" "my_subnet_group" {
 
 resource "aws_db_parameter_group" "param-group" {
   name   = "param-group"
-  family = "mysql5.7"
+  family = "mariadb 10.6.10"
 
   parameter {
     name  = "character_set_server"
@@ -51,8 +51,8 @@ resource "aws_security_group" "rds_sg" {
 resource "aws_db_instance" "my-data" {
   allocated_storage    = 30
   db_name              = "mydb"
-  engine               = "mysql"
-  engine_version       = "5.7"
+  engine               = "mariadb"
+  engine_version       = "10.6.10"
   instance_class       = "db.t2.micro"
   username             = "admin"
   password             = "admin123"
