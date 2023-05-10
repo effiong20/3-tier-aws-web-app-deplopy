@@ -13,7 +13,7 @@ resource "aws_db_subnet_group" "my_subnet_group" {
 
 resource "aws_db_parameter_group" "param-group" {
   name   = "param-group"
-  family = "mariadb 10.6.10"
+  family = "mariadb10.6"
 
   parameter {
     name  = "character_set_server"
