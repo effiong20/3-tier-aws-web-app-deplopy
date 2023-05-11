@@ -10,3 +10,4 @@ variable "my-privatdb-subnet1-cidr"{}
 variable "my-privatdb-subnet2-cidr"{}
 variable "enable_dns_support" {}
 variable "enable_dns_hostname" {}
+

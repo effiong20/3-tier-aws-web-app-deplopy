@@ -2,7 +2,6 @@
 resource "aws_security_group" "instance-sg" {
   name        = "instance-sg"
   description = "Allow TLS inbound traffic"
- // vpc_id      = aws_vpc.my-vpc.id
   vpc_id      = module.vpc_module.vpc-id
   ingress {
     description      = "TLS from VPC"
